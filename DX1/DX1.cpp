@@ -7,6 +7,7 @@
 #include "StepTimer.h"
 #include "ObjModel.h"
 #include "GridModel.h"
+#include "UnitBehavior.h"
 
 #define SAFE_RELESE(x) if(x){(x)->Release(); (x)=nullptr;}
 #define SAFE_DELETE(x) if(x){ delete (x); (x)=nullptr; }
@@ -54,6 +55,7 @@ float GetElapsedTime() { return g_StepTimer.Tick(); }
 #include "Unit.h"
 
 UActor* g_Actor = nullptr;
+bool isSpacePressed = false;
 
 GridModel* g_GridModel = nullptr;
 WVPConstantBuffer* g_WVP = nullptr;
@@ -122,6 +124,11 @@ void Update_Game(float fElapsedTime)
     MoveCamera();
 
     Move_WorldTM();
+
+    if (isSpacePressed) {
+        g_Actor->m_AI->All_ClearStatus();
+        isSpacePressed = false;
+    }
 
     g_Actor->Update(fElapsedTime);
 }
@@ -261,6 +268,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
+    case WM_KEYDOWN:
+        if (wParam == VK_SPACE)
+            isSpacePressed = true;
+        break;
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);

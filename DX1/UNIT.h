@@ -14,6 +14,8 @@ public:
     Matrix mModelTM;
 
     Vector3 mPos;
+	Vector3 mRot;
+	Vector3 mScale;
 
     void Update(float fElapsedTime);
     void Render(ID3D11DeviceContext* pd3dContext);
@@ -25,12 +27,12 @@ class UnitMovement
 public:
     Unit* m_Unit = nullptr;
     Vector3 m_Target = { 1.f, 0.f, 1.f };
-    float m_Speed = 0.01f;
+    float m_Speed = 0.02f;
 
-    Vector3 m_UnitPos;
+	Vector3& m_UnitPos;
 
-    UnitMovement(Unit* u) :m_Unit(u) {
-        m_UnitPos = m_Unit->mPos;
+    UnitMovement(Unit* u) :m_Unit(u), m_UnitPos(m_Unit->mPos) 
+    {
     }
 
     Vector3 GetDirectionToTarget() {
@@ -47,13 +49,16 @@ public:
     {
         if (!isMoving()) return;
 
+		//m_UnitPos = m_Unit->mPos;
+
         Vector3 dir = GetDirectionToTarget();
         m_UnitPos += (dir * m_Speed);
+        float gap = m_Speed + m_Speed * 0.5f;
 
-        if ((m_UnitPos - m_Target).Length() < 0.02f)
+        if ((m_UnitPos - m_Target).Length() < gap)
             m_UnitPos = m_Target;
 
-        m_Unit->mPos = m_UnitPos;
+        //m_Unit->mPos = m_UnitPos;
     }
 
 };

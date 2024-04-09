@@ -40,6 +40,7 @@ public:
     IBehavior* m_Parent = nullptr;
     IBehavior* m_Child = nullptr;
     IBehavior* m_Next = nullptr;
+    int m_NextNo = 0;
 
     IBehavior(IBehavior* parent) { m_Parent = parent; }
 
@@ -57,6 +58,25 @@ public:
 
         m_Next = newnode;
     }
+	void AddChildToLast(IBehavior* newnode)
+	{
+        IBehavior* ch = m_Child;
+        if (!ch) {
+            m_Child = newnode;
+            m_Child->m_Next = nullptr;
+            m_Child->m_NextNo = 0;
+            return;
+        } 
+
+        while (ch->m_Next) 
+            ch = ch->m_Next;
+		
+        ch->m_Next = newnode;
+        ch->m_Next->m_NextNo = ch->m_NextNo + 1;
+        ch->m_Next->m_Next = nullptr;
+
+	}
+
     IBehavior* FindPrev() 
     {
         if (m_Parent->m_Child == this)
@@ -103,6 +123,16 @@ public:
             m_Next = n->m_Next;
             delete n;
         }
+    }
+
+    void All_ClearStatus() {
+        m_BHStatus = BH_INVALID;
+        IBehavior* ch = m_Child;
+        while (ch) {
+            ch->m_BHStatus = BH_INVALID;
+            ch = ch->m_Next;            
+        }
+
     }
 };
 
