@@ -49,6 +49,8 @@ public:
     {
         if (!isMoving()) return;
 
+		m_Unit->mRot.y += (fElapsedTime*2.f);
+
 		//m_UnitPos = m_Unit->mPos;
 
         Vector3 dir = GetDirectionToTarget();

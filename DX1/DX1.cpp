@@ -45,7 +45,7 @@ HRESULT             InitDevice();
 ID3D11Device* GetD3DDevice() { return pd3dDevice; }
 ID3D11DeviceContext* GetD3DContext() { return pd3dContext; }
 
-float GetElapsedTime() { return g_StepTimer.Tick(); }
+//float GetElapsedTime() { return g_StepTimer.Tick(); }
 
 #include "Init_DX.h"
 #include "Init_RenderTarget_ViewPort.h"
@@ -86,32 +86,54 @@ void Destroy_Game()
     SAFE_DELETE(g_Actor);
 }
 
+float g_ElapsedTime = 0.f;
+
+float GetElapsedTime()
+{
+    return g_ElapsedTime;
+}
+
+float ElapsedTime_Tick()
+{
+	// Update our time
+	float t = 0.0f;
+	if (g_driverType == D3D_DRIVER_TYPE_REFERENCE)
+	{
+		t += (float)XM_PI * 0.0125f;
+	}
+	else
+	{
+		static ULONGLONG timeStart = 0;
+		static ULONGLONG timeLast = 0;
+		ULONGLONG timeCur = GetTickCount64();
+        if (timeStart == 0) {
+            timeStart = timeCur;
+            timeLast = timeCur;
+        }
+		t = (timeCur - timeStart) / 1000.0f;
+        g_ElapsedTime = (timeCur - timeLast) / 1000.0f;
+
+        timeLast = timeCur;
+	}
+    return g_ElapsedTime;
+}
+
 void Move_WorldTM()
 {
-    // Update our time
-    static float t = 0.0f;
-    if (g_driverType == D3D_DRIVER_TYPE_REFERENCE)
-    {
-        t += (float)XM_PI * 0.0125f;
-    }
-    else
-    {
-        static ULONGLONG timeStart = 0;
-        ULONGLONG timeCur = GetTickCount64();
-        if (timeStart == 0)
-            timeStart = timeCur;
-        t = (timeCur - timeStart) / 1000.0f;
-    }
+    float t = GetElapsedTime();
+
     Matrix mtm = XMMatrixScaling(3.f, 3.f, 3.f);
     mtm *= XMMatrixRotationY(t / 2.f);
     mtm *= XMMatrixTranslation(0.f, 1.f, 0.f);
 
-    g_Actor->m_Unit->mModelTM = mtm;
+    //g_Actor->m_Unit->mModelTM = mtm;
 
     g_WVP->mCB.World = XMMatrixIdentity();
     g_WVP->mCB.View = g_View;
     g_WVP->mCB.Proj = g_Projection;
 }
+
+
 
 void MoveCamera()
 {
@@ -121,6 +143,7 @@ void MoveCamera()
 
 void Update_Game(float fElapsedTime)
 {
+    ElapsedTime_Tick();
     MoveCamera();
 
     Move_WorldTM();

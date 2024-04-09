@@ -39,6 +39,7 @@ void Unit::Update(float fElapsedTime)
 void Unit::Render(ID3D11DeviceContext* d3dContext)
 {
     Matrix w = mModelTM;
+    w *= Matrix::CreateScale(mScale);
     w *= Matrix::CreateFromYawPitchRoll(mRot);
     w *= Matrix::CreateTranslation(mPos);
 
@@ -50,6 +51,9 @@ void Unit::Render(ID3D11DeviceContext* d3dContext)
 void UActor::Init()
 {
     m_Unit = new Unit();
+	m_Unit->mModelTM = XMMatrixScaling(3.f, 3.f, 3.f);
+    m_Unit->mModelTM *= XMMatrixTranslation(0.f, 1.f, 0.f);
+
     m_UnitMovement = new UnitMovement(m_Unit);
     m_UnitMovement->m_Target = Vector3(5.f, 0.f, 5.f);
 
