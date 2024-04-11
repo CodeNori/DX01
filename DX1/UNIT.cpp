@@ -3,9 +3,12 @@
 #include "SHADER.h"
 #include "UNIT.h"
 #include "UnitBehavior.h"
+#include "UActor.h"
+
 
 #define SAFE_DELETE(x) if(x){ delete (x); (x)=nullptr;}
 
+extern WPARAM g_keyPressed;
 
 Unit::Unit()
 {
@@ -68,16 +71,25 @@ void UActor::Release()
 
 void UActor::InitAI()
 {
-    m_AI = new BTSequence(nullptr);
+    m_AI = new BT::Selector(nullptr);
+    UnitSelectBehavior* up1 = new UnitSelectBehavior(m_AI, g_keyPressed);
+    up1->Init(m_Unit, Vector3(5.f, 0.f, 5.f), 0.1f, VK_UP);
+    UnitSelectBehavior* dn1 = new UnitSelectBehavior(m_AI, g_keyPressed);
+    dn1->Init(m_Unit, Vector3(-5.f, 0.f, -5.f), 0.1f, VK_DOWN);
 
-    UnitMoveBehavior* xz1 = new UnitMoveBehavior(m_AI);
-    xz1->Init(m_Unit, Vector3(5.f, 0.f, 5.f));
-    UnitMoveBehavior* xz2 = new UnitMoveBehavior(m_AI);
-    xz2->Init(m_Unit, Vector3(5.f, 0.f, -5.f));
-    UnitMoveBehavior* xz3 = new UnitMoveBehavior(m_AI);
-    xz3->Init(m_Unit, Vector3(-5.f, 0.f, -5.f));
-    UnitMoveBehavior* xz4 = new UnitMoveBehavior(m_AI);
-    xz4->Init(m_Unit, Vector3(-5.f, 0.f, 5.f));
+
+    m_Seq = new BT::Sequence(m_AI);
+
+    UnitMoveBehavior* xz1 = new UnitMoveBehavior(m_Seq);
+    xz1->Init(m_Unit, Vector3(5.f, 0.f, 5.f), 0.1f);
+    UnitMoveBehavior* xz2 = new UnitMoveBehavior(m_Seq);
+    xz2->Init(m_Unit, Vector3(5.f, 0.f, -5.f), 0.1f);
+    UnitMoveBehavior* xz3 = new UnitMoveBehavior(m_Seq);
+    xz3->Init(m_Unit, Vector3(-5.f, 0.f, -5.f), 0.1f);
+    UnitMoveBehavior* xz4 = new UnitMoveBehavior(m_Seq);
+    xz4->Init(m_Unit, Vector3(-5.f, 0.f, 5.f), 0.1f);
+
+
 
 }
 

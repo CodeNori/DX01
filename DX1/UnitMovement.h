@@ -6,7 +6,7 @@ class UnitMovement
 public:
     Unit* m_Unit = nullptr;
     Vector3 m_Target = { 1.f, 0.f, 1.f };
-    float m_Speed = 0.0001f;
+    float m_Speed = 0.1f;
 
 	Vector3& m_UnitPos;
 

@@ -174,8 +174,10 @@
     <ClInclude Include="tk\PlatformHelpers.h" />
     <ClInclude Include="tk\SimpleMath.h" />
     <ClInclude Include="tk\WICTextureLoader.h" />
+    <ClInclude Include="UActor.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitBehavior.h" />
+    <ClInclude Include="UnitMovement.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Behavior.cpp" />

@@ -8,6 +8,7 @@
 #include "ObjModel.h"
 #include "GridModel.h"
 #include "UnitBehavior.h"
+#include "UActor.h"
 
 #define SAFE_RELESE(x) if(x){(x)->Release(); (x)=nullptr;}
 #define SAFE_DELETE(x) if(x){ delete (x); (x)=nullptr; }
@@ -56,6 +57,7 @@ ID3D11DeviceContext* GetD3DContext() { return pd3dContext; }
 
 UActor* g_Actor = nullptr;
 bool isSpacePressed = false;
+WPARAM g_keyPressed = VK_DOWN;
 
 GridModel* g_GridModel = nullptr;
 WVPConstantBuffer* g_WVP = nullptr;
@@ -292,6 +294,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     switch (message)
     {
     case WM_KEYDOWN:
+        g_keyPressed = wParam;
         if (wParam == VK_SPACE)
             isSpacePressed = true;
         break;

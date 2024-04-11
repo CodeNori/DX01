@@ -108,6 +108,12 @@
     <ClInclude Include="UnitBehavior.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="UnitMovement.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="UActor.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DX1.cpp">
