@@ -158,6 +158,9 @@
     <ClCompile Include="Behavior.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="UnitBehavior.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX1.rc">

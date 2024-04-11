@@ -1,12 +1,13 @@
 #pragma once
+#include "Behavior.h"
 
 class UActor
 {
 public:
     Unit* m_Unit = nullptr;
     UnitMovement* m_UnitMovement = nullptr;
-    class BT::IBehavior* m_AI = nullptr;
-    class BT::IBehavior* m_Seq = nullptr;
+    BT::IBehavior* m_AI = nullptr;
+    BT::IBehavior* m_Seq = nullptr;
 
     UActor() { Init();  }
     ~UActor() { Release(); }

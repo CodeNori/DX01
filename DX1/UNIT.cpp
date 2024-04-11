@@ -54,6 +54,7 @@ void Unit::Render(ID3D11DeviceContext* d3dContext)
 void UActor::Init()
 {
     m_Unit = new Unit();
+    m_Unit->m_Actor = this;
 	m_Unit->mModelTM = XMMatrixScaling(3.f, 3.f, 3.f);
     m_Unit->mModelTM *= XMMatrixTranslation(0.f, 1.f, 0.f);
 

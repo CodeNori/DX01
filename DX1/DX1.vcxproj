@@ -199,6 +199,7 @@
     <ClCompile Include="tk\SimpleMath.cpp" />
     <ClCompile Include="tk\WICTextureLoader.cpp" />
     <ClCompile Include="Unit.cpp" />
+    <ClCompile Include="UnitBehavior.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX1.rc" />
