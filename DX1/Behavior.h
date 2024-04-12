@@ -162,8 +162,6 @@ namespace BT {
                     bh = bh->m_Next;
                     break;
                 case BH_FAILURE:
-                    bh = nullptr;
-                    break;
                 case BH_RUNNING:
                     bh = nullptr;
                     break;
@@ -190,13 +188,11 @@ namespace BT {
                 switch (s)
                 {
                 case BH_SUCCESS:
+                case BH_RUNNING:
                     bh = nullptr;
                     break;
                 case BH_FAILURE:
                     bh = bh->m_Next;
-                    break;
-                case BH_RUNNING:
-                    bh = nullptr;
                     break;
                 }
             }
